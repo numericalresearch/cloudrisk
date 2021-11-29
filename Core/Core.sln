@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantLibrary", "QuantLibrary\QuantLibrary.csproj", "{53AE0AC3-575D-4647-8CE4-483013CB2E71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantLibraryTest", "QuantLibraryTest\QuantLibraryTest.csproj", "{77EAD68F-A05D-4CAD-A536-8D3931D74704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53AE0AC3-575D-4647-8CE4-483013CB2E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53AE0AC3-575D-4647-8CE4-483013CB2E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53AE0AC3-575D-4647-8CE4-483013CB2E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53AE0AC3-575D-4647-8CE4-483013CB2E71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77EAD68F-A05D-4CAD-A536-8D3931D74704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77EAD68F-A05D-4CAD-A536-8D3931D74704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77EAD68F-A05D-4CAD-A536-8D3931D74704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77EAD68F-A05D-4CAD-A536-8D3931D74704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

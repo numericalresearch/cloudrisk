@@ -1,0 +1,12 @@
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/bin/Debug/net6.0/QuantLibrary.deps.json
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/bin/Debug/net6.0/QuantLibrary.dll
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/bin/Debug/net6.0/ref/QuantLibrary.dll
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/bin/Debug/net6.0/QuantLibrary.pdb
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.csproj.AssemblyReference.cache
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.GeneratedMSBuildEditorConfig.editorconfig
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.AssemblyInfoInputs.cache
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.AssemblyInfo.cs
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.csproj.CoreCompileInputs.cache
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.dll
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/ref/QuantLibrary.dll
+/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/obj/Debug/net6.0/QuantLibrary.pdb
