@@ -3,7 +3,7 @@ using QuantLibrary;
 
 namespace QuantLibrary;
 
-public class BlackScholesModels
+public class BlackScholes
 {
     //////////////////////////////////////////////////////////////////////////
     // Function     : calcD1D2
@@ -29,22 +29,22 @@ public class BlackScholesModels
     }
 
     
-    public static double BSCallPrice(double S, double K, double T, double r, double q, double sigma)
+    public static double CallPrice(double S, double K, double T, double r, double q, double sigma)
     {
         var (d1, d2) = calcD1D2(S, K, T, r, q, sigma);
         return Maths.N(d1) * S * Math.Exp (-q * T) - Math.Exp(-r * T) * Maths.N (d2) * K;
     }
-    public static double BSPutPrice(double S,  double K, double T, double r, double q, double sigma)
+    public static double PutPrice(double S, double K, double T, double r, double q, double sigma)
     {
         var (d1, d2) = calcD1D2(S, K, T, r, q, sigma);
         return - Maths.N(-d1) * S * Math.Exp (-q * T) + Math.Exp(-r * T) * Maths.N (-d2) * K;
     }
 
-    public static double BSPrice(bool isCall,  double S, double K,  double T, double r, double q, double sigma)
+    public static double Price(bool isCall,  double S, double K,  double T, double r, double q, double sigma)
     {
         if (isCall)
-            return BSCallPrice (S, K, T, r, q, sigma);
+            return CallPrice (S, K, T, r, q, sigma);
         else
-            return BSPutPrice (S, K, T, r, q, sigma);
+            return PutPrice (S, K, T, r, q, sigma);
     }
 }

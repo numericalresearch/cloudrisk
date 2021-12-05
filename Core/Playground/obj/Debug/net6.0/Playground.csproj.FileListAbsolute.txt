@@ -16,3 +16,4 @@
 /home/bkloss/newdev/cloudrisk/Core/Playground/bin/Debug/net6.0/QuantLibrary.dll
 /home/bkloss/newdev/cloudrisk/Core/Playground/bin/Debug/net6.0/QuantLibrary.pdb
 /home/bkloss/newdev/cloudrisk/Core/Playground/obj/Debug/net6.0/Playground.csproj.CopyComplete
+/home/bkloss/newdev/cloudrisk/Core/Playground/bin/Debug/net6.0/NodaTime.dll

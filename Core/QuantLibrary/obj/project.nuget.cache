@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "uY68IhRVgLKlhdwkmZieo1VWZpkZxUfj279qc9wUT9C0dC+6q7r8oCNWDigZ09OmBsSUae4pe+pahDaigeCnqA==",
+  "dgSpecHash": "ZMdZW0cxNO7LYUdSl3gWjpgFChcGtjslODhbLAKWXqPw/08vYVPWTmbNOiMV4Hy6LNWY18j+ur9WcCqakjDutQ==",
   "success": true,
   "projectFilePath": "/home/bkloss/newdev/cloudrisk/Core/QuantLibrary/QuantLibrary.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/bkloss/.nuget/packages/nodatime/3.0.9/nodatime.3.0.9.nupkg.sha512",
+    "/home/bkloss/.nuget/packages/system.runtime.compilerservices.unsafe/4.7.1/system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

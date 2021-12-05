@@ -41,6 +41,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "NodaTime": {
+              "target": "Package",
+              "version": "[3.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -93,6 +99,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "NodaTime": {
+              "target": "Package",
+              "version": "[3.0.9, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

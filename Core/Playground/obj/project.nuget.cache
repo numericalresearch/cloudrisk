@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "NIhE4KJGrMx2xcy0/5K97jmHuYu1C7ymeWG9WPSWafKJHAsCHIRl9QoD3Z/m3cM5bKpBEdQSapB8tDaV57mAEw==",
+  "dgSpecHash": "X1kHXHc31XBTsV72pFxVJMzBUOtjFyq5R5W8hbTlNjD0mF6N+kGtlydGAoeOGuee9ZImCw37lugnJDpHPKEK/A==",
   "success": true,
   "projectFilePath": "/home/bkloss/newdev/cloudrisk/Core/Playground/Playground.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/bkloss/.nuget/packages/nodatime/3.0.9/nodatime.3.0.9.nupkg.sha512",
+    "/home/bkloss/.nuget/packages/system.runtime.compilerservices.unsafe/4.7.1/system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

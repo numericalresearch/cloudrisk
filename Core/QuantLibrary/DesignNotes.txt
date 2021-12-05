@@ -1,0 +1,15 @@
+
+
+How to deal with the position / trade / conundrum?
+
+Option 1)
+    We're mocking out high level risk calcs; individual trades don't really matter, let's just deal with positions as (Instrument, Counterparty) * quantity
+    
+
+Option 2)
+    Model trades, aggregate in place
+    
+Option 3) 
+    Have an IPosition interface, and implement Option 1 for now?
+    
+    
