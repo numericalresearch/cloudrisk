@@ -11,22 +11,22 @@ namespace QuantLibraryTest
         [Test]
         public void TestOutSyntax()
         {
-            Assert.IsTrue(Unit.GBP == Unit.Shares / Unit.GBP * (Unit.GBP / Unit.Shares) * Unit.GBP);
-            Assert.IsTrue(Unit.One * Unit.GBP == Unit.GBP);
-            Assert.IsTrue(Unit.GBP * Unit.One == Unit.GBP);
-            Assert.IsTrue(Unit.One / Unit.One  == Unit.One);
+            Assert.IsTrue(Units.GBP == Units.Shares / Units.GBP * (Units.GBP / Units.Shares) * Units.GBP);
+            Assert.IsTrue(Units.One * Units.GBP == Units.GBP);
+            Assert.IsTrue(Units.GBP * Units.One == Units.GBP);
+            Assert.IsTrue(Units.One / Units.One  == Units.One);
             
-            Assert.IsTrue(Unit.One == Unit.Shares / Unit.Shares);
-            Assert.IsTrue(Unit.One == Unit.GBP / Unit.GBP);
-            Assert.IsTrue(Unit.One / Unit.GBP == Unit.Shares / (Unit.Shares * Unit.GBP));
+            Assert.IsTrue(Units.One == Units.Shares / Units.Shares);
+            Assert.IsTrue(Units.One == Units.GBP / Units.GBP);
+            Assert.IsTrue(Units.One / Units.GBP == Units.Shares / (Units.Shares * Units.GBP));
         }
 
         [Test]
         public void TestSimplifyForSimpleCancels()
         {
-            var units = new Units(new[] { Unit.Shares }, new[] { Unit.Shares });
+            var units = new Units(new[] { Unit._Shares }, new[] { Unit._Shares });
             units.Simplify();
-            Assert.IsTrue(Unit.One == units);
+            Assert.IsTrue(Units.One == units);
         }
     }
 }

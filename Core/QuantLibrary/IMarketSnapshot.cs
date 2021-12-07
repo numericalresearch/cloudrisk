@@ -21,9 +21,9 @@ namespace QuantLibrary
             return new MarketKey { Type = "Stock", Name = stock.Ticker };
         }
 
-        public static MarketKey DiscountCurve(string ccy)
+        public static MarketKey DiscountCurve(Units ccy)
         {
-            return new MarketKey { Type = "DiscountCurve", Name = ccy };
+            return new MarketKey { Type = "DiscountCurve", Name = ccy.ToString() };
         }
 
         public static MarketKey VolSurface(Stock stock)
@@ -31,7 +31,7 @@ namespace QuantLibrary
             return new MarketKey { Type = "VolSurface", Name = stock.Ticker };
         }
 
-        public static MarketKey FxRate(string fromCcy, string toCcy)
+        public static MarketKey FxRate(Units fromCcy, Units toCcy)
         {
             return new MarketKey { Type = "FXRate", Name = $"{toCcy}/{fromCcy}" };
         }
@@ -51,6 +51,6 @@ namespace QuantLibrary
         
         bool GetItem<T>(MarketKey key, out T? item) where T : class;
 
-        Amount Convert(Amount amount, string toCurrency);
+        Amount Convert(Amount amount, Units toCurrency);
     }
 }

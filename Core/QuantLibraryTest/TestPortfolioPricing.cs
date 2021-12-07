@@ -25,7 +25,7 @@ namespace QuantLibraryTest
         [Test]
         public void TestSimplePortfolio()
         {
-            var ccy = "GBP";
+            var ccy = Units.GBP;
             var stock = new Stock("ABCD.L", ccy);
             var option = new VanillaEquityOption(stock, 100, PutCall.Call, _today + Period.FromDays(180));
             

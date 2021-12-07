@@ -49,31 +49,31 @@ namespace QuantLibrary
             return true;
         }
 
-        public void SetFXRate(string fromCcy, string toCcy, double rate)
+        public void SetFXRate(Units fromCcy, Units toCcy, double rate)
         {
             if (rate == 0.0)
                 throw new MarketDataException("FX rate must not be 0!");
 
-            _fxRates[new Tuple<string, string>(fromCcy, toCcy)] = rate;
+            _fxRates[new Tuple<string, string>(fromCcy.ToString(), toCcy.ToString())] = rate;
         }
-        public double GetFXRate(string fromCcy, string toCcy)
+        public double GetFXRate(Units fromCcy, Units toCcy)
         {
             if (fromCcy == toCcy)
                 return 1.0;
             
             double rate;
-            if (_fxRates.TryGetValue(new Tuple<string, string>(fromCcy, toCcy), out rate))
+            if (_fxRates.TryGetValue(new Tuple<string, string>(fromCcy.ToString(), toCcy.ToString()), out rate))
                 return rate;
-            else if (_fxRates.TryGetValue(new Tuple<string, string>(toCcy, fromCcy), out rate))
+            else if (_fxRates.TryGetValue(new Tuple<string, string>(toCcy.ToString(), fromCcy.ToString()), out rate))
             {
                 return 1 / rate;
             }
             throw new MarketDataException($"No FX rate found for {fromCcy}/{toCcy} is not compatible with requested type");
         }
         
-        public Amount Convert(Amount amount, string toCurrency)
+        public Amount Convert(Amount amount, Units toCurrency)
         {
-            var rate = GetFXRate(amount.Currency, toCurrency);
+            var rate = GetFXRate(amount.Units, toCurrency);
             return new Amount(amount.Value * rate, toCurrency);
         }
 

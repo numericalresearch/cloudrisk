@@ -109,7 +109,7 @@ namespace QuantLibrary
         public DollarGreeks DollarGreeks;
         public Dictionary<string, RiskMeasure> Risk = new();
 
-        public CalcResults(string ccy)
+        public CalcResults(Units ccy)
         {
             DollarGreeks.PV = new Amount(0, ccy);
             DollarGreeks.Delta = new Amount(0, ccy);
@@ -121,7 +121,7 @@ namespace QuantLibrary
 
         public static CalcResults operator * (double lhs, CalcResults rhs)
         {
-            var res = new CalcResults(rhs.DollarGreeks.PV.Currency);
+            var res = new CalcResults(rhs.DollarGreeks.PV.Units);
             res.BlackScholesGreeks = lhs * rhs.BlackScholesGreeks;
             res.DollarGreeks = lhs * rhs.DollarGreeks;
 
@@ -134,7 +134,7 @@ namespace QuantLibrary
         public static CalcResults operator + (CalcResults lhs, CalcResults rhs)
         {
             // TODO 
-            var res = new CalcResults(lhs.DollarGreeks.PV.Currency);    
+            var res = new CalcResults(lhs.DollarGreeks.PV.Units);    
             // res.BlackScholesGreeks = lhs.BlackScholesGreeks + rhs.BlackScholesGreeks;
             res.DollarGreeks = lhs.DollarGreeks + rhs.DollarGreeks;
 
@@ -144,7 +144,7 @@ namespace QuantLibrary
     
     public class RiskParameters
     {
-        public string DefaultCcy = "GBP";
+        public Units DefaultCcy = Units.GBP;
         
         public static readonly RiskParameters Default = new();
     };

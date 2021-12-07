@@ -19,16 +19,16 @@ namespace QuantLibraryTest
         public void TestFXConversions()
         {
             var env = new SimpleMarketSnapshot();
-            Assert.Throws<MarketDataException>(() => env.GetFXRate("GBP", "EUR"));
-            Assert.Throws<MarketDataException>(() => env.GetFXRate("GBP", "USD"));
-            Assert.Throws<MarketDataException>(() => env.Convert(new Amount(100, "GBP"), "EUR"));
+            Assert.Throws<MarketDataException>(() => env.GetFXRate(Units.GBP, Units.EUR));
+            Assert.Throws<MarketDataException>(() => env.GetFXRate(Units.GBP, Units.USD));
+            Assert.Throws<MarketDataException>(() => env.Convert(new Amount(100, Units.GBP), Units.EUR));
             
-            env.SetFXRate("GBP", "EUR", 1.1);
-            Assert.That(AlmostEquals(env.GetFXRate("GBP", "EUR"), 1.1));
-            Assert.That(AlmostEquals(env.GetFXRate("EUR", "GBP"), 1/1.1));
-            var converted = env.Convert(new Amount(100, "GBP"), "EUR");
+            env.SetFXRate(Units.GBP, Units.EUR, 1.1);
+            Assert.That(AlmostEquals(env.GetFXRate(Units.GBP, Units.EUR), 1.1));
+            Assert.That(AlmostEquals(env.GetFXRate(Units.EUR, Units.GBP), 1/1.1));
+            var converted = env.Convert(new Amount(100, Units.GBP), Units.EUR);
             Assert.That(AlmostEquals(converted.Value, 110.0));
-            Assert.AreEqual(converted.Currency, "EUR");
+            Assert.AreEqual(converted.Units, Units.EUR);
 
         }
         

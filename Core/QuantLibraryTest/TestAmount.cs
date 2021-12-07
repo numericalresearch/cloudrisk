@@ -9,8 +9,8 @@ namespace QuantLibraryTest
         [Test]
         public void TestRelationalOperators()
         {
-            var oneEuro = new Amount(1, "EUR");
-            var twoEuro = new Amount(2, "EUR");
+            var oneEuro = new Amount(1, Units.EUR);
+            var twoEuro = new Amount(2, Units.EUR);
             
             Assert.That(oneEuro < twoEuro);
             Assert.That(twoEuro > oneEuro);
@@ -19,8 +19,8 @@ namespace QuantLibraryTest
         [Test]
         public void TestMultiplication()
         {
-            var oneEuro = new Amount(1, "EUR");
-            var twoEuro = new Amount(2, "EUR");
+            var oneEuro = new Amount(1, Units.EUR);
+            var twoEuro = new Amount(2, Units.EUR);
             
             Assert.That(2 * oneEuro == twoEuro);
             Assert.That(oneEuro * 2 == twoEuro);

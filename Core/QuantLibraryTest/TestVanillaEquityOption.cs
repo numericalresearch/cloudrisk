@@ -11,7 +11,7 @@ namespace QuantLibraryTest
         public void TestRiskMeasuresOnSimpleVanillaCall()
         {
             var ticker = "ABCD.L";
-            var ccy = "GBP";
+            var ccy = Units.GBP;
             var stock = new Stock(ticker, ccy);
             
             var strike = 100;

@@ -6,9 +6,9 @@ namespace QuantLibrary
     public class Stock : IInstrument
     {
         public readonly string Ticker;
-        public readonly string Currency;
+        public readonly Units Currency;
 
-        public Stock(string ticker, string ccy)
+        public Stock(string ticker, Units ccy)
         {
             Ticker = ticker;
             Currency = ccy;

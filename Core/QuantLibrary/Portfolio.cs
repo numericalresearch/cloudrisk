@@ -43,7 +43,7 @@ namespace QuantLibrary
             return totalRisk;
         }
 
-        private static CalcResults FxConvert(CalcResults cr, string ccy, IMarketSnapshot market)
+        private static CalcResults FxConvert(CalcResults cr, Units ccy, IMarketSnapshot market)
         {
             var converted = new CalcResults(ccy);
             converted.BlackScholesGreeks = cr.BlackScholesGreeks;
@@ -51,7 +51,7 @@ namespace QuantLibrary
             return converted;
         }
 
-        private static DollarGreeks Convert(DollarGreeks greeks, string ccy, IMarketSnapshot market)
+        private static DollarGreeks Convert(DollarGreeks greeks, Units ccy, IMarketSnapshot market)
         {
             return new DollarGreeks(
                 market.Convert(greeks.PV, ccy),
