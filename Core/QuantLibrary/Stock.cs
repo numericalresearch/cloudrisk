@@ -1,4 +1,6 @@
 
+using System;
+
 namespace QuantLibrary
 {
     public class Stock : IInstrument
@@ -12,14 +14,21 @@ namespace QuantLibrary
             Currency = ccy;
         }
         
-        public Amount Value(IMarketEnv marketEnv)
+        public CalcResults CalculateRisk(IMarketSnapshot marketSnapshot, RiskParameters riskParameters)
         {
-            throw new System.NotImplementedException();
-        }
+            var res = new CalcResults(Currency);
+            
+            res.BlackScholesGreeks.PV = marketSnapshot.GetPrice(MarketKey.StockPrice(this)).Value;
+            res.BlackScholesGreeks.Delta = 1;
+            res.BlackScholesGreeks.Gamma = 0;
+            res.BlackScholesGreeks.Vega = 0;
+            res.BlackScholesGreeks.Theta = 0;
+            res.BlackScholesGreeks.Rho = 0;
 
-        public CalcResults CalculateRisk(IMarketEnv marketEnv, RiskParameters riskParameters)
-        {
-            throw new System.NotImplementedException();
+            res.DollarGreeks.PV = marketSnapshot.GetPrice(MarketKey.StockPrice(this));
+            res.DollarGreeks.Delta = new Amount(1, Currency);
+
+            return res;
         }
     }
 }

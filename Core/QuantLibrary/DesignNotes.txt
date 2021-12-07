@@ -13,3 +13,12 @@ Option 3)
     Have an IPosition interface, and implement Option 1 for now?
     
     
+    
+======================
+
+TODO
+- Is there a units library I can use instead? Or should I just ditch units / nonunited stuff? 
+done, needs testing - FX handling
+done - Build out BS models as a next step    
+done - test them against online calculators like  https://goodcalculators.com/black-scholes-calculator/
+

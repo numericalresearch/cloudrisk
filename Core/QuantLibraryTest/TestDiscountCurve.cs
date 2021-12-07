@@ -1,5 +1,5 @@
+using System;
 using NodaTime;
-using NuGet.Frameworks;
 using NUnit.Framework;
 using QuantLibrary;
 
@@ -8,13 +8,15 @@ namespace QuantLibraryTest
     [TestFixture]
     public class TestDiscountCurve
     {
+        private static readonly double Tolerance = Math.Pow(10, -6);
+        
         [Test]
         public void TestDiscountFactor()
         {
             var today = new LocalDate(2021, 1, 1);
             var curve = new FlatDiscountCurve(today, 0.05);
             
-            Assert.IsTrue(1 == curve.df(today));
+            Assert.That(1, Is.EqualTo(curve.df(today)).Within(Tolerance));
             Assert.IsTrue(curve.df(today + Period.FromDays(1)) < 1);
             Assert.IsTrue(0 < curve.df(today + Period.FromDays(1)));
             
@@ -37,7 +39,7 @@ namespace QuantLibraryTest
             var df_d0_d1 = curve.df(d0, d1);
             var df_d1_d2 = curve.df(d0, d1);
             
-            Assert.AreEqual(df_d0_d2, df_d0_d1 * df_d1_d2);
+            Assert.That(df_d0_d2, Is.EqualTo(df_d0_d1 * df_d1_d2).Within(Tolerance));
         }
 
         [Test]

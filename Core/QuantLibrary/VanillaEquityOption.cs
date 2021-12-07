@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using System.Reflection.Metadata;
 using System.Text;
 using NodaTime;
 
@@ -9,9 +10,7 @@ namespace QuantLibrary
         Put,
         Call
     }
-    
-    
-    
+ 
     public class VanillaEquityOption : IInstrument 
     {
         public readonly Stock Underlying;
@@ -32,50 +31,48 @@ namespace QuantLibrary
             Expiry = expiry;
         }
 
-        public Amount Value(IMarketEnv marketEnv)
+        // Calculate risks; txlate to $ risks; get rid of Value()
+        public CalcResults CalculateRisk(IMarketSnapshot marketSnapshot, RiskParameters riskParameters)
         {
-            /*
-            double spot = marketEnv.GetPrice(new MarketKey {Stock.Ticker, "", }) 
-
-            */
-    //        if(!marketEnv.GetItem(new MarketKey(Underlying.Currency, ... , "DiscountCurve"), out var discountCurve))
-    //           throw new QuantLibraryException("missing curve ");
-    
-    
-            /*
-              How do we make this easy to use? Maybe key shouldn't involve a timestamp?
-              - in this context, we expect a market environment to be a consistent snapshot, containing the latest 
-              values, so maybe rename it???
-              
-              
-              Convenience functions to generate different keys?
-              
-              var spot = env.GetPrice(PriceKey(Underlying));
-              if (!env.GetItem(DiscountCurveKey(Underlying.Currency), out IDiscountCurve curve))
-                throw MissingMarketDataException($"No discount   
-                
-                
-                
-                
-             
-              
-             */
+            if (marketSnapshot.PricingDate > Expiry)
+                // TODO
+                throw new QuantLibraryException("Expired instrument");
+                    
+            // collect market data                    
+            var spot = marketSnapshot.GetPrice(MarketKey.StockPrice(Underlying));
             
-            double spot = 100;
-            double r = 0.05; //  marketEnv.Get
-            double price;
-            /*
-            PutCall switch
-            {
-                case PutCall.Call:
-                    price = BlackScholes.CallPrice(DispositionTypeNames, )
-                */
-            throw new System.NotImplementedException();
-        }
+            if (!marketSnapshot.GetItem(MarketKey.DiscountCurve(Underlying.Currency), out IDiscountCurve? curve) || curve == null)
+                throw new MissingMarketDataException($"No discount curve found for {Underlying.Currency}");
+            var r = curve.r(Expiry);
 
-        public CalcResults CalculateRisk(IMarketEnv marketEnv, RiskParameters riskParameters)
-        {
-            throw new System.NotImplementedException();
+            if (!marketSnapshot.GetItem(MarketKey.VolSurface(Underlying), out IVolSurface? vols) || vols == null)
+                throw new MissingMarketDataException($"No discount curve found for {Underlying.Currency}");
+            var sigma = vols.Vol(Expiry, Strike);
+            
+            // TODO 
+            var q = 0.0;    // Let's ignore dividends for now for simplicity 
+            
+            var days = Period.Between(marketSnapshot.PricingDate, Expiry, PeriodUnits.Days).Days;
+            var t = days / 365.0;
+
+            var res = new CalcResults(Underlying.Currency);
+            
+            // calculate BS risks
+            if (PutCall == PutCall.Call)
+                res.BlackScholesGreeks = BlackScholes.Call(spot.Value, Strike,  t,  r,  q,  sigma);
+            else
+                res.BlackScholesGreeks = BlackScholes.Put(spot.Value, Strike,  t,  r,  q,  sigma);
+            
+            // txlate to $ risks
+            // TODO 
+            res.DollarGreeks.PV = new Amount(res.BlackScholesGreeks.PV * Strike, Underlying.Currency);
+            res.DollarGreeks.Delta = new Amount(res.BlackScholesGreeks.Delta, Underlying.Currency);
+            res.DollarGreeks.Gamma = new Amount(res.BlackScholesGreeks.Gamma, Underlying.Currency);
+            res.DollarGreeks.Vega = new Amount(res.BlackScholesGreeks.Vega, Underlying.Currency);
+            res.DollarGreeks.Theta = new Amount(res.BlackScholesGreeks.Theta * Strike, Underlying.Currency);
+            res.DollarGreeks.Rho = new Amount(res.BlackScholesGreeks.Rho, Underlying.Currency);
+
+            return res;
         }
     }
 }

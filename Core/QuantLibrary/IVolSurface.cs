@@ -7,7 +7,7 @@ namespace QuantLibrary
         public double Vol(LocalDate date, double strike);
     }
 
-    class FlatVolSurface : IVolSurface
+    public class FlatVolSurface : IVolSurface
     {
         private double vol;
 

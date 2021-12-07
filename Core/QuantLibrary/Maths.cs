@@ -96,5 +96,14 @@ namespace QuantLibrary
                 return erfc(-x / root2) * 0.5;
             }
         }
+        
+        const double invroot2pi = // (1.0 / sqrt(2.0 * pi))
+            0.3989422804014326779399460599343818684758566882199982663918071175769;
+        // standard normal probability density function
+        public static double normalpdf (double x)
+        {
+            return invroot2pi * Math.Exp(-0.5 * x * x);
+        }
+        
     }
 }

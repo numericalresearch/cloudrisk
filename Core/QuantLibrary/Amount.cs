@@ -26,7 +26,21 @@ namespace QuantLibrary
             if (lhs.Currency != rhs.Currency)
                 throw new IncompatibleCurrencyException($"Currencies '{lhs.Currency}' and '{rhs.Currency}' are not compatible for arithmetic");
         }
-            
+
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Amount))
+                return false;
+
+            Amount other = (Amount)obj;
+            return this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode() ^ Currency.GetHashCode();
+        }
+        
         public static bool operator == (Amount lhs, Amount rhs)
         {
             CheckCompatibleCurrencies(lhs, rhs);
@@ -60,6 +74,12 @@ namespace QuantLibrary
         public static Amount operator * (Amount lhs, double rhs)
         {
             return new Amount(lhs.Value * rhs, lhs.Currency);
+        }
+
+        public static Amount operator +(Amount lhs, Amount rhs)
+        {
+            CheckCompatibleCurrencies(lhs, rhs);
+            return new Amount(lhs.Value + rhs.Value, lhs.Currency);
         }
     }
 }

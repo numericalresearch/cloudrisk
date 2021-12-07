@@ -7,7 +7,7 @@ namespace QuantLibraryTest
     [TestFixture]
     public class TestMaths
     {
-        private static double Tolerance = 1 / Math.Pow(10, 6);
+        private static readonly double Tolerance = 1 / Math.Pow(10, 6);
         [TestCase(-5, 0)]
         [TestCase(-2, 0.02275013)]
         [TestCase(-1, 0.15865525)]
