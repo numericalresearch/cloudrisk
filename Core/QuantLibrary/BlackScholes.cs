@@ -28,18 +28,6 @@ public class BlackScholes
         return (d1, d2);
     }
 
-    
-    public static double CallPrice(double S, double K, double T, double r, double q, double sigma)
-    {
-        var (d1, d2) = calcD1D2(S, K, T, r, q, sigma);
-        return Maths.N(d1) * S * Math.Exp (-q * T) - Math.Exp(-r * T) * Maths.N (d2) * K;
-    }
-    public static double PutPrice(double S, double K, double T, double r, double q, double sigma)
-    {
-        var (d1, d2) = calcD1D2(S, K, T, r, q, sigma);
-        return - Maths.N(-d1) * S * Math.Exp (-q * T) + Math.Exp(-r * T) * Maths.N (-d2) * K;
-    }
-
     public static BlackScholesGreeks Call(double S, double K, double T, double r, double q, double sigma)
     {
         var (d1, d2) = calcD1D2(S, K, T, r, q, sigma);
@@ -189,13 +177,4 @@ public class BlackScholes
         double theta = term1 + term2 + term3;
         return theta;
      }
-         
-
-    public static double Price(bool isCall,  double S, double K,  double T, double r, double q, double sigma)
-    {
-        if (isCall)
-            return CallPrice (S, K, T, r, q, sigma);
-        else
-            return PutPrice (S, K, T, r, q, sigma);
-    }
 }
