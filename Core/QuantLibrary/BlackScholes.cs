@@ -1,8 +1,6 @@
 ﻿using System;
 using QuantLibrary;
 
-namespace QuantLibrary;
-
 public class BlackScholes
 {
     //////////////////////////////////////////////////////////////////////////
@@ -125,7 +123,7 @@ public class BlackScholes
         return p;
     }
 
-    static double  putDelta  (double S, double K, double T,
+    static double putDelta  (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
@@ -133,7 +131,7 @@ public class BlackScholes
         return delta;
     }
 
-    static double  putGamma (double S, double K, double T,
+    static double putGamma (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
@@ -141,7 +139,7 @@ public class BlackScholes
         return gamma;
     }
 
-    static double  putVega  (double S, double K, double T,
+    static double putVega  (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
@@ -149,7 +147,7 @@ public class BlackScholes
         return vega;
     }
 
-    static double  putRho (double S, double K, double T,
+    static double putRho (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
@@ -157,7 +155,7 @@ public class BlackScholes
         return rho;
     }
 
-    static double  putRho_q (double S, double K, double T,
+    static double putRho_q (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
@@ -165,7 +163,7 @@ public class BlackScholes
         return rho;
     }
 
-    static double  putTheta (double S, double K, double T,
+    static double putTheta (double S, double K, double T,
                        double r, double q, double sigma,
                        double d1, double d2)
     {
