@@ -56,6 +56,11 @@ namespace QuantLibrary
                 greeks.Rho * amount
             );
         }
+
+        public static BlackScholesGreeks operator * (Decimal amount, BlackScholesGreeks greeks)
+        {
+            return (double)amount * greeks;
+        }
     }
 
     public struct DollarGreeks
@@ -88,7 +93,7 @@ namespace QuantLibrary
                 lhs.Rho + rhs.Rho
             );
         }
-        public static DollarGreeks operator * (double lhs, DollarGreeks rhs)
+        public static DollarGreeks operator * (Decimal lhs, DollarGreeks rhs)
         {
             return new DollarGreeks(
                 lhs * rhs.PV,
@@ -107,26 +112,22 @@ namespace QuantLibrary
         
         public BlackScholesGreeks BlackScholesGreeks;
         public DollarGreeks DollarGreeks;
-        public Dictionary<string, RiskMeasure> Risk = new();
 
         public CalcResults(Units ccy)
         {
-            DollarGreeks.PV = new Amount(0, ccy);
-            DollarGreeks.Delta = new Amount(0, ccy);
-            DollarGreeks.Gamma = new Amount(0, ccy);
-            DollarGreeks.Vega = new Amount(0, ccy);
-            DollarGreeks.Theta = new Amount(0, ccy);
-            DollarGreeks.Rho = new Amount(0, ccy);
+            DollarGreeks.PV = new Amount(0m, ccy);
+            DollarGreeks.Delta = new Amount(0m, Units.One);
+            DollarGreeks.Gamma = new Amount(0m, Units.One/ccy);
+            DollarGreeks.Vega = new Amount(0m, ccy);
+            DollarGreeks.Theta = new Amount(0m, ccy);
+            DollarGreeks.Rho = new Amount(0m, ccy);
         }
 
-        public static CalcResults operator * (double lhs, CalcResults rhs)
+        public static CalcResults operator * (Decimal lhs, CalcResults rhs)
         {
             var res = new CalcResults(rhs.DollarGreeks.PV.Units);
             res.BlackScholesGreeks = lhs * rhs.BlackScholesGreeks;
             res.DollarGreeks = lhs * rhs.DollarGreeks;
-
-            res.Risk = rhs.Risk.Select(k => k).ToDictionary(x => x.Key, y => lhs * y.Value);
-
             return res;
         }
 
@@ -135,7 +136,6 @@ namespace QuantLibrary
         {
             // TODO 
             var res = new CalcResults(lhs.DollarGreeks.PV.Units);    
-            // res.BlackScholesGreeks = lhs.BlackScholesGreeks + rhs.BlackScholesGreeks;
             res.DollarGreeks = lhs.DollarGreeks + rhs.DollarGreeks;
 
             return res;
@@ -152,15 +152,15 @@ namespace QuantLibrary
     public interface IPosition : IPriceable
     {
         public IInstrument Instrument { get; }
-        public double Quantity { get; }
+        public Decimal Quantity { get; }
     }
     
     public class SimplePosition : IPosition
     {
         public IInstrument Instrument { get; }
-        public double Quantity { get; }
+        public Decimal Quantity { get; }
              
-        public SimplePosition(IInstrument instrument, double quantity)
+        public SimplePosition(IInstrument instrument, Decimal quantity)
         {
             Instrument = instrument;
             Quantity = quantity;

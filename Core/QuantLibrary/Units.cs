@@ -14,12 +14,18 @@ namespace QuantLibrary
         
         public static readonly Unit _Shares = new Unit("Shares");
         public static readonly Unit _One  = new Unit(1);
+        public static readonly Unit _None  = new Unit("NONE");
 
         private readonly object _value;
 
         public Unit(object value)
         {
             _value = value;
+        }
+
+        public bool IsCurrency()
+        {
+            return this != _Shares && this != _One;
         }
 
         public static Units operator * (Unit a, Unit b)
@@ -35,7 +41,6 @@ namespace QuantLibrary
             res.Simplify();
             return res;
         }
-
         
         public static bool operator == (Unit a, Unit b)
         {
@@ -53,7 +58,7 @@ namespace QuantLibrary
         }
     }
 
-    public class Units
+    public struct Units
     {
         public static readonly Units DKK = new Units(Unit._DKK);
         public static readonly Units EUR = new Units(Unit._EUR);
@@ -63,8 +68,57 @@ namespace QuantLibrary
         public static readonly Units Shares = new Units(Unit._Shares);
         public static readonly Units One = new Units(Unit._One);
 
-        private readonly Dictionary<Unit, int> _numerator = new(); 
-        private readonly Dictionary<Unit, int> _denominator = new();
+        public static readonly Units None = new Units(Unit._None);
+
+        // private readonly Dictionary<Unit, int> _numerator; 
+        // private readonly Dictionary<Unit, int> _denominator;
+        public readonly Dictionary<Unit, int> _numerator; 
+        public readonly Dictionary<Unit, int> _denominator;
+
+        public Units(Unit unit)
+        : this(new []{unit}, new Unit[]{})
+        {
+        }
+        public Units(Unit[] numerator, Unit[] denominator)
+        {
+            _numerator = new Dictionary<Unit, int>();
+            _denominator = new Dictionary<Unit, int>();
+            
+            foreach (var u in numerator)
+                Incr(_numerator, u);
+            foreach (var u in denominator)
+                Incr(_denominator, u);
+        }
+
+        public Units(Dictionary<Unit, int>  numerator, Dictionary<Unit, int> denominator)
+        {
+            _numerator = new Dictionary<Unit, int>();
+            _denominator = new Dictionary<Unit, int>();
+
+            foreach (var u in numerator)
+                Incr(_numerator, u.Key, u.Value);
+            foreach (var u in denominator)
+                Incr(_denominator, u.Key, u.Value);
+        }
+
+        public Units(Dictionary<Unit, int>  numerator)
+        {
+            _numerator = new Dictionary<Unit, int>();
+            _denominator = new Dictionary<Unit, int>();
+
+            foreach (var u in numerator)
+                Incr(_numerator, u.Key, u.Value);
+        }
+
+        public Units NumeratorUnits()
+        {
+            return new Units(_numerator);
+        }
+        
+        public Units DenominatorUnits()
+        {
+            return new Units(_denominator);
+        }
 
         private static void Incr(Dictionary<Unit, int> d, Unit u, int value=1)
         { 
@@ -82,30 +136,10 @@ namespace QuantLibrary
             else
                 d[u] = current - value;
         }
-
-        public Units(Unit unit)
-        : this(new []{unit}, new Unit[]{})
-        {
-        }
-        public Units(Unit[] numerator, Unit[] denominator)
-        {
-            foreach (var u in numerator)
-                Incr(_numerator, u);
-            foreach (var u in denominator)
-                Incr(_denominator, u);
-        }
-
-        public Units(Dictionary<Unit, int>  numerator, Dictionary<Unit, int>  denominator)
-        {
-            foreach (var u in numerator)
-                Incr(_numerator, u.Key, u.Value);
-            foreach (var u in denominator)
-                Incr(_denominator, u.Key, u.Value);
-        }
-
         
         public void Simplify()
         {
+            // If we have the same unit in the numerator and denominator, cancel out opposing units
             foreach(var u in _numerator.Keys)
             {
                 if (_denominator.ContainsKey(u))
@@ -116,15 +150,48 @@ namespace QuantLibrary
                 }
             }
 
-            if (_numerator.ContainsKey(Unit._One) && _numerator.Count > 1)
-                _numerator.Remove(Unit._One);
+            if (_numerator.ContainsKey(Unit._One))
+            {
+                // If we have higher orders of 1 in the numerator, reduce them to 1: 1 * 1 * .. == 1
+                if (_numerator[Unit._One] > 1)
+                {
+                    _numerator[Unit._One] = 1;
+                }
+                // if we have a numerator in the form 1 * x, we can safely drop the 1
+                else if (_numerator.Count > 1)
+                {
+                    _numerator.Remove(Unit._One);
+                }
+            }
+
+            // denominator Ones get dropped; x / 1 == x
             if (_denominator.ContainsKey(Unit._One))
                 _denominator.Remove(Unit._One);
 
+            // We can have empty denominators (an implicit 1), but not empty numerators (something has to be divided)
             if (_numerator.Count == 0)
                 _numerator[Unit._One] = 1;
-        } 
-        
+        }
+
+        public bool IsSimpleCurrency()
+        {
+            if (!IsTrivial(out var unit))
+                return false;
+            if (!unit.HasValue)
+                return false;
+            return unit.Value.IsCurrency();
+        }
+
+        public bool IsInvertedCurrency()
+        {
+            if (_numerator.Count != 1 && _numerator.First().Key != Unit._One)
+                return false;
+            if (_denominator.Count != 1)
+                return false;
+            return _denominator.First().Key.IsCurrency();
+        }
+
+        public bool IsTrivial() => IsTrivial(out var _);
         public bool IsTrivial(out Unit? unit)
         {
             if ( _denominator.Count == 0 
@@ -138,6 +205,15 @@ namespace QuantLibrary
             return false;
         }
 
+        public static Amount operator * (Decimal value, Units units)
+        {
+            return new Amount(value, units);
+        }
+        public static Amount operator * (Units units, Decimal value)
+        {
+            return new Amount(value, units);
+        }
+        
         public static Units operator * (Unit a, Units b)
         {
             var res = new Units(b._numerator, b._denominator);
@@ -254,17 +330,30 @@ namespace QuantLibrary
 
         public override int GetHashCode()
         {
-            return _numerator.GetHashCode() ^ _denominator.GetHashCode();
+            //return _numerator.GetHashCode() ^ _denominator.GetHashCode();
+            return RepeatableDictHash(_numerator) ^ RepeatableDictHash(_denominator);
         }
 
-        public override string? ToString()
+        private int RepeatableDictHash(Dictionary<Unit, int> dict)
+        {
+            var accum = 0;
+            foreach (var kv in dict)
+            {
+                accum += kv.GetHashCode();
+            }
+
+            return accum;
+        }
+        
+        public override string ToString()
         {
             var s = new StringBuilder();
-            if (_numerator.Count > 1)
+            if (_numerator.Values.Sum() > 1)
             {
                 s.Append("[");
                 foreach (var u in _numerator.Keys)
-                    s.Append($"{u} ");
+                    for (int i = 0; i < _numerator[u]; ++i)
+                        s.Append($"{u} ");
                 s.Append("]");
             }
             else
@@ -272,11 +361,16 @@ namespace QuantLibrary
                 s.Append(_numerator.First().Key.ToString());
             }
 
-            if (_denominator.Count > 0)
+            if (_denominator.Values.Sum() == 1)
+            {
+                s.Append($" / {_denominator.First().Key.ToString()}");
+            }
+            else if (_denominator.Values.Sum() >= 1)
             {
                 s.Append(" / [");
                 foreach (var u in _denominator.Keys)
-                    s.Append($"{u} ");
+                    for (int i = 0; i < _denominator[u]; ++i)
+                        s.Append($"{u} ");
                 s.Append("]");
             }
 

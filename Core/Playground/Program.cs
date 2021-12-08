@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using QuantLibrary;
 
+// TODO price and reprice a portfolio, print the results
+
 Console.WriteLine("Hello, World!");
 
 

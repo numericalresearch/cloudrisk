@@ -33,7 +33,7 @@ namespace QuantLibrary
         
         public static CalcResults AggregatePositionRisks( List<CalcResults> risks, IMarketSnapshot market, RiskParameters riskParameters)
         {
-            var totalRisk = new CalcResults(riskParameters.DefaultCcy);
+            var totalRisk = new CalcResults(Units.None);
             
             foreach(var r in risks)
             {
@@ -53,6 +53,9 @@ namespace QuantLibrary
 
         private static DollarGreeks Convert(DollarGreeks greeks, Units ccy, IMarketSnapshot market)
         {
+            if (greeks.PV.Units == ccy)
+                return greeks;
+            
             return new DollarGreeks(
                 market.Convert(greeks.PV, ccy),
                 market.Convert(greeks.Delta, ccy),

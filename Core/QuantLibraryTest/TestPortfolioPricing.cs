@@ -9,9 +9,6 @@ namespace QuantLibraryTest
     {
         private static readonly LocalDate _today = new LocalDate(2021, 12, 6); 
         
-
-
-        
         private IMarketSnapshot BuildSingleStockMarketSnapshot(Stock stock)
         {
             var snapshot = new SimpleMarketSnapshot();

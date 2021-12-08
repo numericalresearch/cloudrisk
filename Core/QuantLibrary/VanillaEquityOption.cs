@@ -59,18 +59,17 @@ namespace QuantLibrary
             
             // calculate BS risks
             if (PutCall == PutCall.Call)
-                res.BlackScholesGreeks = BlackScholes.Call(spot.Value, Strike,  t,  r,  q,  sigma);
+                res.BlackScholesGreeks = BlackScholes.Call((double)spot.Value, Strike,  t,  r,  q,  sigma);
             else
-                res.BlackScholesGreeks = BlackScholes.Put(spot.Value, Strike,  t,  r,  q,  sigma);
+                res.BlackScholesGreeks = BlackScholes.Put((double)spot.Value, Strike,  t,  r,  q,  sigma);
             
             // txlate to $ risks
-            // TODO 
-            res.DollarGreeks.PV = new Amount(res.BlackScholesGreeks.PV * Strike, Underlying.Currency);
-            res.DollarGreeks.Delta = new Amount(res.BlackScholesGreeks.Delta, Underlying.Currency);
-            res.DollarGreeks.Gamma = new Amount(res.BlackScholesGreeks.Gamma, Underlying.Currency);
-            res.DollarGreeks.Vega = new Amount(res.BlackScholesGreeks.Vega, Underlying.Currency);
-            res.DollarGreeks.Theta = new Amount(res.BlackScholesGreeks.Theta * Strike, Underlying.Currency);
-            res.DollarGreeks.Rho = new Amount(res.BlackScholesGreeks.Rho, Underlying.Currency);
+            res.DollarGreeks.PV = new Amount((decimal)(res.BlackScholesGreeks.PV), Underlying.Currency);
+            res.DollarGreeks.Delta = new Amount((decimal)res.BlackScholesGreeks.Delta, Units.One);
+            res.DollarGreeks.Gamma = new Amount((decimal)res.BlackScholesGreeks.Gamma, Units.One / Underlying.Currency);
+            res.DollarGreeks.Vega = new Amount((decimal)res.BlackScholesGreeks.Vega, Underlying.Currency);
+            res.DollarGreeks.Theta = new Amount((decimal)(res.BlackScholesGreeks.Theta), Underlying.Currency);
+            res.DollarGreeks.Rho = new Amount((decimal)res.BlackScholesGreeks.Rho, Underlying.Currency);
 
             return res;
         }

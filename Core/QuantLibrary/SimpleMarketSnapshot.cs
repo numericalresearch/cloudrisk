@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NodaTime;
 
 namespace QuantLibrary
 {
     public class SimpleMarketSnapshot : IMarketSnapshot
     {
-        private readonly Dictionary<Tuple<string, string>, double> _fxRates = new();
+        private readonly Dictionary<Tuple<Units, Units>, decimal> _fxRates = new();
         private readonly Dictionary<MarketKey, Amount> _simple = new (); 
         private readonly Dictionary<MarketKey, object> _structured = new (); 
 
@@ -49,32 +50,52 @@ namespace QuantLibrary
             return true;
         }
 
-        public void SetFXRate(Units fromCcy, Units toCcy, double rate)
+        public void SetFXRate(Units fromCcy, Units toCcy, Decimal rate)
         {
-            if (rate == 0.0)
-                throw new MarketDataException("FX rate must not be 0!");
+            if (rate == 0)
+                throw new MarketDataException("FX rate must not be 0!"); 
+            if (!fromCcy.IsTrivial())
+                throw new MarketDataException("From unit must be trivial"); 
+            if (!toCcy.IsTrivial())
+                throw new MarketDataException("to unit must be trivial"); 
 
-            _fxRates[new Tuple<string, string>(fromCcy.ToString(), toCcy.ToString())] = rate;
+            _fxRates[new Tuple<Units, Units>(fromCcy, toCcy)] = rate;
         }
-        public double GetFXRate(Units fromCcy, Units toCcy)
+        public Amount GetFXRate(Units fromUnits, Units toCcy)
         {
-            if (fromCcy == toCcy)
-                return 1.0;
-            
-            double rate;
-            if (_fxRates.TryGetValue(new Tuple<string, string>(fromCcy.ToString(), toCcy.ToString()), out rate))
-                return rate;
-            else if (_fxRates.TryGetValue(new Tuple<string, string>(toCcy.ToString(), fromCcy.ToString()), out rate))
+            if (!toCcy.IsSimpleCurrency())
+                throw new QuantLibraryException("Can only convert to single currencies!");
+
+            if (fromUnits == toCcy)
+                return 1m * Units.One;
+
+            if (fromUnits == Units.One)
+                return 1m * toCcy;
+
+            if (fromUnits.IsSimpleCurrency())
             {
-                return 1 / rate;
+                decimal rate;
+                if (_fxRates.TryGetValue(new Tuple<Units, Units>(fromUnits, toCcy), out rate))
+                    return rate * toCcy / fromUnits;
+                else if (_fxRates.TryGetValue(new Tuple<Units, Units>(toCcy, fromUnits), out rate))
+                    return (1 / rate) * toCcy / fromUnits;
+                
+                throw new MarketDataException($"No FX rate found for {fromUnits}/{toCcy}");
             }
-            throw new MarketDataException($"No FX rate found for {fromCcy}/{toCcy} is not compatible with requested type");
+            else if (fromUnits.IsInvertedCurrency())
+            {
+                var rate = GetFXRate(fromUnits.DenominatorUnits(), toCcy);
+                return (1m / rate);
+
+            }
+
+            throw new QuantLibraryException($"Error in GetFXRate, can't handle unit combination {fromUnits} to {toCcy}");
         }
         
         public Amount Convert(Amount amount, Units toCurrency)
         {
             var rate = GetFXRate(amount.Units, toCurrency);
-            return new Amount(amount.Value * rate, toCurrency);
+            return amount * rate;
         }
 
     }

@@ -18,7 +18,7 @@ namespace QuantLibrary
         {
             var res = new CalcResults(Currency);
             
-            res.BlackScholesGreeks.PV = marketSnapshot.GetPrice(MarketKey.StockPrice(this)).Value;
+            res.BlackScholesGreeks.PV = (double)marketSnapshot.GetPrice(MarketKey.StockPrice(this)).Value;
             res.BlackScholesGreeks.Delta = 1;
             res.BlackScholesGreeks.Gamma = 0;
             res.BlackScholesGreeks.Vega = 0;
@@ -26,7 +26,7 @@ namespace QuantLibrary
             res.BlackScholesGreeks.Rho = 0;
 
             res.DollarGreeks.PV = marketSnapshot.GetPrice(MarketKey.StockPrice(this));
-            res.DollarGreeks.Delta = new Amount(1, Currency);
+            res.DollarGreeks.Delta = new Amount(1m, Units.One);
 
             return res;
         }

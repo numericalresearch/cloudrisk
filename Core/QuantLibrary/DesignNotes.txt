@@ -17,8 +17,61 @@ Option 3)
 ======================
 
 TODO
-- Is there a units library I can use instead? Or should I just ditch units / nonunited stuff? 
+done 0 Is there a units library I can use instead? Or should I just ditch units / nonunited stuff? 
+    - No, implemented my own units library, that works 
 done, needs testing - FX handling
 done - Build out BS models as a next step    
 done - test them against online calculators like  https://goodcalculators.com/black-scholes-calculator/
+
+=======================
+
+What are the actual units on the greeks?
+
+A stock price is really Currency / Share
+An option price is really Currency / Option
+But the instrument part is usually glossed over, so we'd say a price is just a currency
+
+https://www.arpm.co/lab/taylor-approximations.html
+
+--
+Delta
+
+Taylor series is
+ 
+price(t1) = price(t0) + delta * (underlying_price(t1) - underlying_price(t0))
+          = Ccy/instrument + delta * Ccy/instrument
+
+so the unit of delta is 1,  
+assuming we consistently treat prices as ccy/instrument       
+--
+
+Gamma
+
+Taylor series is
+ 
+price(t1) = delta_expansion + 0.5 * gamma * (underlying_price(t1) - underlying_price(t0)) ^ 2
+          = ccy/instrument + 0.5 * gamma * ccy^2 / instrument^2
+
+so the unit of gamma is Instr / Ccy, or 1/Ccy if we use implicit instruments
+
+--
+
+Vega
+price(t1) = price(t0) + vega * (vol(t1) - vol(t0)) 
+vols are unitless, so the unit of vega must be the same as price, i.e. Currency/Instrument 
+
+Theta
+price(t1) = price(t0) + theta * 1 day 
+
+So, either we introduce time as a unit, in which case the unit theta is Currency/(Instrument * Day), or we treat
+time as unitless, in which case it's Currency/Instrument 
+
+
+Rho
+price(t1) = price(t0) + rho * (r(t1) - r(t0)) 
+rates are unitless, so the unit of rho must be the same as price, i.e. Currency/Instrument 
+
+------
+
+
 

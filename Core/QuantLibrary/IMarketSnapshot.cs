@@ -13,7 +13,10 @@ namespace QuantLibrary
 
         public override string ToString()
         {
-            return Type + ":" + Name; // TODO - is the default good enough? 
+            if (Scenario.Length == 0)
+                return Type + ":" + Name;
+            else
+                return Type + ":" + Name + ":" + Scenario;
         }
         
         public static MarketKey StockPrice(Stock stock)
@@ -35,8 +38,6 @@ namespace QuantLibrary
         {
             return new MarketKey { Type = "FXRate", Name = $"{toCcy}/{fromCcy}" };
         }
-        
-        
     }
 
     public interface IMarketSnapshot

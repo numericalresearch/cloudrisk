@@ -10,25 +10,45 @@ namespace QuantLibraryTest
     [TestFixture]
     public class TestSimpleMarketSnapshot
     {
-        private static bool AlmostEquals(double x, double y)
-        {
-            return Math.Abs(x - y) < 1e-7;
-        }
-        
         [Test]
-        public void TestFXConversions()
+        public void TestThatWeThrowOnMissingFxRates()
         {
             var env = new SimpleMarketSnapshot();
             Assert.Throws<MarketDataException>(() => env.GetFXRate(Units.GBP, Units.EUR));
             Assert.Throws<MarketDataException>(() => env.GetFXRate(Units.GBP, Units.USD));
             Assert.Throws<MarketDataException>(() => env.Convert(new Amount(100, Units.GBP), Units.EUR));
-            
-            env.SetFXRate(Units.GBP, Units.EUR, 1.1);
-            Assert.That(AlmostEquals(env.GetFXRate(Units.GBP, Units.EUR), 1.1));
-            Assert.That(AlmostEquals(env.GetFXRate(Units.EUR, Units.GBP), 1/1.1));
+        }
+
+        [Test]
+        public void TestGettingSimpleAndInvertedFxRates()
+        {
+            var env = new SimpleMarketSnapshot();
+            env.SetFXRate(Units.GBP, Units.EUR, 1.1m);
+            Assert.That(env.GetFXRate(Units.GBP, Units.EUR) ==  1.1m * Units.EUR / Units.GBP);
+            Assert.That(env.GetFXRate(Units.EUR, Units.GBP) ==  1 / 1.1m * Units.GBP / Units.EUR);
+        }
+
+        [Test]
+        public void TestSimpleUnitFxConversion()
+        {
+            var env = new SimpleMarketSnapshot();
+            env.SetFXRate(Units.GBP, Units.EUR, 1.1m);
             var converted = env.Convert(new Amount(100, Units.GBP), Units.EUR);
-            Assert.That(AlmostEquals(converted.Value, 110.0));
+            Assert.That(converted.Value == 110.0m);
             Assert.AreEqual(converted.Units, Units.EUR);
+        }
+
+        [Test]
+        public void TestFxConversionWithComplexUnits()
+        {
+            var env = new SimpleMarketSnapshot();
+            env.SetFXRate(Units.DKK, Units.EUR, 0.1m);
+            
+            Assert.AreEqual(1000 * Units.DKK, env.Convert(100 * Units.EUR, Units.DKK));
+            Assert.AreEqual(10 * Units.EUR , env.Convert(100 * Units.DKK, Units.EUR));
+
+            Assert.AreEqual(10 * Units.One / Units.DKK, env.Convert(100m * (Units.One/Units.EUR), Units.DKK));
+            Assert.AreEqual(1000 * (Units.One / Units.EUR), env.Convert(100m * (Units.One / Units.DKK), Units.EUR));
 
         }
         
@@ -36,20 +56,14 @@ namespace QuantLibraryTest
         public void TestThatWeCanGetAndSetPrices()
         {
             var env = new SimpleMarketSnapshot();
-            
+            // TODO
 
         }
 
         [Test]
         public void TestThatWeGetTheRightErrorsForMissingPrices()
         {
-            
-        }
-
-        [Test]
-        public void TestThatPricesAreCorrectlyInterpolatedBackwards()
-        {
-            
+            // TODO
         }
     }
 }

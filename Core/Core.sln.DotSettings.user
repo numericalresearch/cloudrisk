@@ -1,7 +1,19 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">SUGGESTION</s:String>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">/home/bkloss/.cache/JetBrains/Rider2021.2/resharper-host/temp/Rider/vAny/CoverageData/_Core.-1515669824/Snapshot/snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=19eda84b_002Db38d_002D4607_002D969c_002Db0238cb59848/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=19eda84b_002Db38d_002D4607_002D969c_002Db0238cb59848/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/bkloss/newdev/cloudrisk/Core/QuantLibraryTest" Presentation="&amp;lt;QuantLibraryTest&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=401f54a0_002D8020_002D490e_002Dbf4b_002D5fc0b8bc019d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt; #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/bkloss/newdev/cloudrisk/Core/QuantLibraryTest" Presentation="&amp;lt;QuantLibraryTest&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=45eef7d7_002Dc76e_002D4022_002Da866_002Db82836bd8f2f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt; #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/bkloss/newdev/cloudrisk/Core/QuantLibraryTest" Presentation="&amp;lt;QuantLibraryTest&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=beb47a56_002D2279_002D48cb_002D9a42_002D4f397e12270e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt; #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/bkloss/newdev/cloudrisk/Core/QuantLibraryTest" Presentation="&amp;lt;QuantLibraryTest&amp;gt;" /&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f365ba47_002D9498_002D4e35_002Dac53_002D94ed04c36c3e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;QuantLibraryTest&amp;gt; #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Project Location="/home/bkloss/newdev/cloudrisk/Core/QuantLibraryTest" Presentation="&amp;lt;QuantLibraryTest&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
