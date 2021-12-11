@@ -1,8 +1,3 @@
-using System;
-
-
-// TODO - do I need all these constructors, and should I seal the classes?
-// https://stackoverflow.com/questions/12051/calling-the-base-constructor-in-c-sharp
 namespace QuantLibrary
 {
     public class QuantLibraryException : Exception

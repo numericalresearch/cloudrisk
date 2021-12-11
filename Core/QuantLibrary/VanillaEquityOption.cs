@@ -31,11 +31,10 @@ namespace QuantLibrary
             Expiry = expiry;
         }
 
-        // Calculate risks; txlate to $ risks; get rid of Value()
+        // Calculate risks; translate to $ risks
         public CalcResults CalculateRisk(IMarketSnapshot marketSnapshot, RiskParameters riskParameters)
         {
             if (marketSnapshot.PricingDate > Expiry)
-                // TODO
                 throw new QuantLibraryException("Expired instrument");
                     
             // collect market data                    
@@ -49,7 +48,6 @@ namespace QuantLibrary
                 throw new MissingMarketDataException($"No discount curve found for {Underlying.Currency}");
             var sigma = vols.Vol(Expiry, Strike);
             
-            // TODO 
             var q = 0.0;    // Let's ignore dividends for now for simplicity 
             
             var days = Period.Between(marketSnapshot.PricingDate, Expiry, PeriodUnits.Days).Days;
@@ -63,7 +61,7 @@ namespace QuantLibrary
             else
                 res.BlackScholesGreeks = BlackScholes.Put((double)spot.Value, Strike,  t,  r,  q,  sigma);
             
-            // txlate to $ risks
+            // translate to $ risks
             res.DollarGreeks.PV = new Amount((decimal)(res.BlackScholesGreeks.PV), Underlying.Currency);
             res.DollarGreeks.Delta = new Amount((decimal)res.BlackScholesGreeks.Delta, Units.One);
             res.DollarGreeks.Gamma = new Amount((decimal)res.BlackScholesGreeks.Gamma, Units.One / Underlying.Currency);

@@ -7,13 +7,13 @@ namespace QuantLibrary
     
     public struct MarketKey
     {
-        public string Type; // 
-        public string Name; // structured name
+        public string Type;         // TODO  
+        public string Name;         // structured name
         public string Scenario;     // 
 
         public override string ToString()
         {
-            if (Scenario.Length == 0)
+            if (Scenario != null)
                 return Type + ":" + Name;
             else
                 return Type + ":" + Name + ":" + Scenario;

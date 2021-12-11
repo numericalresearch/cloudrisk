@@ -131,13 +131,10 @@ namespace QuantLibrary
             return res;
         }
 
-        // TODO 
         public static CalcResults operator + (CalcResults lhs, CalcResults rhs)
         {
-            // TODO 
             var res = new CalcResults(lhs.DollarGreeks.PV.Units);    
             res.DollarGreeks = lhs.DollarGreeks + rhs.DollarGreeks;
-
             return res;
         }
     }

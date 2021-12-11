@@ -55,15 +55,26 @@ namespace QuantLibraryTest
         [Test]
         public void TestThatWeCanGetAndSetPrices()
         {
-            var env = new SimpleMarketSnapshot();
-            // TODO
+            var key = MarketKey.StockPrice(new Stock("ZZZZ.F", Units.EUR));
+            var price = new Amount(789, Units.EUR);
 
+            var env = new SimpleMarketSnapshot();
+            env.SetPrice(key, price);
+            Assert.IsTrue(env.GetPrice(key, out var retrievedPrice));
+            Assert.IsTrue(price == retrievedPrice);
+            
+            Assert.IsTrue(price == env.GetPrice(key));
         }
 
         [Test]
         public void TestThatWeGetTheRightErrorsForMissingPrices()
         {
-            // TODO
+            var key = MarketKey.StockPrice(new Stock("ZZZZ.F", Units.EUR));
+            var env = new SimpleMarketSnapshot();   
+            Assert.IsFalse(env.GetPrice(key, out var _));
+            Assert.Throws<MissingMarketDataException>(() => env.GetPrice(key));
         }
+        
+        // TODO test SetItem / GetItem
     }
 }
