@@ -29,10 +29,13 @@ namespace QuantLibraryTest
 
             var risks = option.CalculateRisk(mkt, RiskParameters.Default);
             Assert.That(risks.BlackScholesGreeks.PV > 0.5);
+            Assert.That(risks.BlackScholesGreeks.Delta > 0.0);  // Call delta should be positive
+            Assert.That(risks.BlackScholesGreeks.Gamma > 0.0);  // Call Gamma should be positive
+            Assert.That(risks.BlackScholesGreeks.Vega > 0.0);   // Call vega should be positive
+            Assert.That(risks.BlackScholesGreeks.Theta < 0.0);   // Call theta should be negative
+            Assert.That(risks.BlackScholesGreeks.Rho >  0.0);   // Call rho should be positive
+                
             Assert.That(risks.DollarGreeks.PV.Value > 5.0m);
-            // TODO 
         }
-        
-        // TODO use 
     }
 }

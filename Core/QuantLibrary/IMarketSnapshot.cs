@@ -7,9 +7,9 @@ namespace QuantLibrary
     
     public struct MarketKey
     {
-        public string Type;         // TODO  
-        public string Name;         // structured name
-        public string Scenario;     // 
+        public string Type;         // Broad category of item being referenced - e.g. stock price, yield curve  
+        public string Name;         // suitable unique moniker 
+        public string Scenario;     // null by default, will be useful when implementing scenarios later
 
         public override string ToString()
         {

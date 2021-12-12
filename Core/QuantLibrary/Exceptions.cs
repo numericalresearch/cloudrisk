@@ -1,3 +1,5 @@
+using System;
+
 namespace QuantLibrary
 {
     public class QuantLibraryException : Exception

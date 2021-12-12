@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace QuantLibrary
 {
-    public struct Unit
+    public readonly struct Unit
     {
         public static readonly Unit _DKK = new Unit("DKK");
         public static readonly Unit _EUR = new Unit("EUR");
@@ -55,6 +52,20 @@ namespace QuantLibrary
         public override string? ToString()
         {
             return _value.ToString();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (!(obj is Unit))
+                return false;
+
+            Unit other = (Unit)obj;
+            return this == other;
+        }
+
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
         }
     }
 
@@ -330,7 +341,6 @@ namespace QuantLibrary
 
         public override int GetHashCode()
         {
-            //return _numerator.GetHashCode() ^ _denominator.GetHashCode();
             return RepeatableDictHash(_numerator) ^ RepeatableDictHash(_denominator);
         }
 

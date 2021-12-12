@@ -1,2 +1,6 @@
-bin/*
-obj/*
+*.dll
+*.pdb
+**/bin/
+**/obj
+.cache
+.CopyComplete

@@ -23,31 +23,35 @@ namespace QuantLibraryTest
         public void TestSimplePortfolio()
         {
             var ccy = Units.GBP;
+            
             var stock = new Stock("ABCD.L", ccy);
+            var stockPosition = new SimplePosition(stock, 50);
+
             var option = new VanillaEquityOption(stock, 100, PutCall.Call, _today + Period.FromDays(180));
+            var optionPosition = new SimplePosition(option, -100);
             
             var portfolio = new Portfolio();
-            portfolio.Add(new SimplePosition(stock, 50));
-            portfolio.Add(new SimplePosition(option, -100));
+            portfolio.Add(stockPosition);
+            portfolio.Add(optionPosition);
 
             var snapshot = BuildSingleStockMarketSnapshot(stock);
 
             var risksByItem = portfolio.CalculatePositionRisks(snapshot, RiskParameters.Default);
             var aggregatedRisk = Portfolio.AggregatePositionRisks(risksByItem, snapshot, RiskParameters.Default);
             
-            // TODO asserts
+            Assert.IsTrue(risksByItem[0].Value + risksByItem[1].Value == aggregatedRisk.Value);
         }
 
         [Test]
         public void TestMultiCurrencyPortfolio()
         {
-            
+            // TODO           
         }
 
         [Test]
         public void TestNestedPortfolio()
         {
-            
+            // TODO 
         }
     }
 }
