@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantLibraryTest", "QuantLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{0FA4010F-FFD7-4DA5-AF15-93E4D0771CC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD455CB6-6C31-4187-BDF1-FDA5F8E3FDFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FA4010F-FFD7-4DA5-AF15-93E4D0771CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FA4010F-FFD7-4DA5-AF15-93E4D0771CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FA4010F-FFD7-4DA5-AF15-93E4D0771CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FA4010F-FFD7-4DA5-AF15-93E4D0771CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
